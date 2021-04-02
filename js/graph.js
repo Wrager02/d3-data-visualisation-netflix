@@ -9,7 +9,10 @@ let svg = d3.select("#my_dataviz")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/2_TwoNum.csv", function(data) {
+d3.csv("https://raw.githubusercontent.com/Wrager02/d3-test/master/data/random.csv", function(data) {
+    console.log(data)
+
+
     // Add X axis
     var x = d3.scaleLinear()
         .domain([0, 100])
@@ -31,8 +34,8 @@ d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_data
         .data(data)
         .enter()
         .append("circle")
-        .attr("cx", function (d) { return x(d.GrLivArea); } )
-        .attr("cy", function (d) { return y(d.SalePrice); } )
-        .attr("r", 1.5)
+        .attr("cx", function (d) { return x(d.random1); } )
+        .attr("cy", function (d) { return y(d.random2); } )
+        .attr("r", 5)
         .style("fill", "#69b3a2")
 });
