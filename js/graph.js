@@ -1,41 +1,44 @@
-let margin = {top: 10, right: 30, bottom: 30, left: 60},
-    width = 460 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+// The svg
+var svg = d3.select("svg"),
+    width = +svg.attr("width"),
+    height = +svg.attr("height");
 
-let svg = d3.select("#my_dataviz")
-    .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+// Map and projection
+var path = d3.geoPath();
+var projection = d3.geoMercator()
+    .scale(70)
+    .center([0, 20])
+    .translate([width / 2, height / 2]);
 
-d3.csv("https://raw.githubusercontent.com/Wrager02/d3-test/master/data/random.csv", function(data) {
-    console.log(data)
+// Data and color scale
+var data = d3.map();
+var colorScale = d3.scaleThreshold()
+    .domain([100000, 1000000, 10000000, 30000000, 100000000, 500000000])
+    .range(d3.schemeBlues[7]);
 
+// Load external data and boot
+d3.queue()
+    .defer(d3.json, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson")
+    .defer(d3.csv, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world_population.csv", function (d) {
+        data.set(d.code, +d.pop);
+    })
+    .await(ready);
 
-    // Add X axis
-    var x = d3.scaleLinear()
-        .domain([0, 100])
-        .range([ 0, width ]);
+function ready(error, topo) {
+
+    // Draw the map
     svg.append("g")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x));
-
-    // Add Y axis
-    var y = d3.scaleLinear()
-        .domain([0, 100])
-        .range([ height, 0]);
-    svg.append("g")
-        .call(d3.axisLeft(y));
-
-    // Add dots
-    svg.append('g')
-        .selectAll("dot")
-        .data(data)
+        .selectAll("path")
+        .data(topo.features)
         .enter()
-        .append("circle")
-        .attr("cx", function (d) { return x(d.random1); } )
-        .attr("cy", function (d) { return y(d.random2); } )
-        .attr("r", 5)
-        .style("fill", "#69b3a2")
-});
+        .append("path")
+        // draw each country
+        .attr("d", d3.geoPath()
+            .projection(projection)
+        )
+        // set the color of each country
+        .attr("fill", function (d) {
+            d.total = data.get(d.id) || 0;
+            return colorScale(d.total);
+        });
+}

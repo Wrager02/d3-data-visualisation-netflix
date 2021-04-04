@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <script src="https://d3js.org/d3.v4.js"></script>
-    <script src="js/graph.js" defer></script>
-    <title>My first graph</title>
-</head>
-<body>
-<div id="my_dataviz"></div>
-</body>
-</html>
+<meta charset="utf-8">
+
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v4.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+<script src="js/graph.js" defer></script>
+
+<!-- Create an element where the map will take place -->
+<svg id="my_dataviz" width="1280" height="720"></svg>
