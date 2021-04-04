@@ -13,19 +13,21 @@ var projection = d3.geoMercator()
 // Data and color scale
 var data = d3.map();
 var colorScale = d3.scaleThreshold()
-    .domain([100000, 1000000, 10000000, 30000000, 100000000, 500000000])
+    .domain([0, 1, 10, 20, 50, 100])
     .range(d3.schemeBlues[7]);
 
 // Load external data and boot
 d3.queue()
     .defer(d3.json, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson")
-    .defer(d3.csv, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world_population.csv", function (d) {
-        data.set(d.code, +d.pop);
+    // .defer(d3.csv, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world_population.csv", function (d) {
+    .defer(d3.csv, "https://raw.githubusercontent.com/Wrager02/d3-test/master/data/netflix_titles.csv", function (d) {
+        d.country.split(", ").forEach(country => {
+            data.set(country, data.get(country) ? data.get(country) + 1 : 1);
+        })
     })
     .await(ready);
 
 function ready(error, topo) {
-    console.log(topo)
 
     // Draw the map
     svg.append("g")
@@ -39,9 +41,11 @@ function ready(error, topo) {
         )
         // set the color of each country
         .attr("fill", function (d) {
-            console.log(d)
-            console.log(data.get(d.id))
-            d.total = data.get(d.id) || 0;
+            if (typeof data.get(d.properties.name) === "undefined") {
+                console.log(d.properties.name)
+            }
+            d.total = data.get(d.properties.name) || 0;
+            // console.log(d.properties.name + ": " + d.total)
             return colorScale(d.total);
         });
 }
