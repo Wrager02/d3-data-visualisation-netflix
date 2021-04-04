@@ -13,7 +13,7 @@ var projection = d3.geoMercator()
 // Data and color scale
 var data = d3.map();
 var colorScale = d3.scaleThreshold()
-    .domain([0, 1, 10, 20, 50, 100])
+    .domain([0, 1, 20, 50, 100, 1000])
     .range(d3.schemeBlues[7]);
 
 // Load external data and boot
