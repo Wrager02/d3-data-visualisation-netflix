@@ -20,7 +20,7 @@ var colorScale = d3.scaleThreshold()
 d3.queue()
     .defer(d3.json, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson")
     // .defer(d3.csv, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world_population.csv", function (d) {
-    .defer(d3.csv, "https://raw.githubusercontent.com/Wrager02/d3-test/master/data/netflix_titles.csv", function (d) {
+    .defer(d3.csv, "https://raw.githubusercontent.com/Wrager02/d3-test/master/data/netflix_titles_v2.csv", function (d) {
         d.country.split(", ").forEach(country => {
             data.set(country, data.get(country) ? data.get(country) + 1 : 1);
         })
