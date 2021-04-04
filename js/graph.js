@@ -25,6 +25,7 @@ d3.queue()
     .await(ready);
 
 function ready(error, topo) {
+    console.log(topo)
 
     // Draw the map
     svg.append("g")
@@ -38,6 +39,8 @@ function ready(error, topo) {
         )
         // set the color of each country
         .attr("fill", function (d) {
+            console.log(d)
+            console.log(data.get(d.id))
             d.total = data.get(d.id) || 0;
             return colorScale(d.total);
         });
