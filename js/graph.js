@@ -42,10 +42,10 @@ function ready(error, topo) {
         // set the color of each country
         .attr("fill", function (d) {
             if (typeof data.get(d.properties.name) === "undefined") {
-                console.log(d.properties.name)
+                // console.log(d.properties.name)
             }
             d.total = data.get(d.properties.name) || 0;
-            // console.log(d.properties.name + ": " + d.total)
+            console.log(d.properties.name + ": " + d.total)
             return colorScale(d.total);
         });
 }
