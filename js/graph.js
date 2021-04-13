@@ -3,8 +3,8 @@
 //     width = +svg.attr("width"),
 //     height = +svg.attr("height");
 
-var width = 700,
-    height = 450;
+var width = 1050,
+    height = 675;
 
 var svg = d3.select("#my_dataviz")
     .append("svg")
@@ -15,7 +15,7 @@ var svg = d3.select("#my_dataviz")
 // Map and projection
 var path = d3.geoPath();
 var projection = d3.geoMercator()
-    .scale(100)
+    .scale(150)
     .center([0, 50])
     .translate([width / 2, height / 2]);
 
@@ -23,7 +23,7 @@ var projection = d3.geoMercator()
 var data = d3.map();
 var colorScale = d3.scaleThreshold()
     .domain([0, 1, 20, 50, 100, 1000])
-    .range(d3.schemeBlues[7]);
+    .range(d3.schemeReds[7]);
 
 // Load external data and boot
 d3.queue()
@@ -48,52 +48,52 @@ function ready(error, topo) {
         .style("border-width", "1px")
         .style("border-radius", "5px")
         .style("padding", "10px")
+        .style("position", "absolute")
+        .style("z-index", 100)
 
+    var legend = d3.legendColor()
+        .scale(colorScale)
+        .labels(["No data", "0", "1+", "20+", "50+", "100+", "1000+"]);
 
+    svg.append("g").call(legend)
 
-    // A function that change this tooltip when the user hover a point.
-    // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
     var mouseover = function(d) {
         tooltip
             .html(d.properties.name + ": " + d.total)
             .style("opacity", 1)
-            .style("position", "absolute")
-            .style("z-index", 100)
-            .style("left", (d3.mouse(this)[0]+30) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
-            .style("top", (d3.mouse(this)[1]) + "px")
+            .style("left", (d3.mouse(this)[0]+30) + "px")
+            .style("top", (d3.mouse(this)[1]-10) + "px")
+        d3.select(this)
+            .transition()
+            .duration(100)
+            .style("stroke", "black")
     }
 
     var mousemove = function(d) {
         tooltip
-            .style("left", (d3.mouse(this)[0]+30) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
-            .style("top", (d3.mouse(this)[1]) + "px")
+            .style("left", (d3.mouse(this)[0]+30) + "px")
+            .style("top", (d3.mouse(this)[1]-10) + "px")
     }
 
-    // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
     var mouseleave = function(d) {
         tooltip
-            // .transition()
-            // .duration(200)
             .style("opacity", 0)
+        d3.select(this)
+            .transition()
+            .duration(100)
+            .style("stroke", "transparent")
     }
 
-    // Draw the map
     svg.append("g")
         .selectAll("path")
         .data(topo.features)
         .enter()
         .append("path")
-        // draw each country
         .attr("d", d3.geoPath()
             .projection(projection)
         )
-        // set the color of each country
         .attr("fill", function (d) {
-            // if (typeof data.get(d.properties.name) === "undefined") {
-                // console.log(d.properties.name)
-            // }
             d.total = data.get(d.properties.name) || 0;
-            console.log(d.properties.name + ": " + d.total)
             return colorScale(d.total);
         })
         .on("mouseover", mouseover )
