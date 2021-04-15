@@ -1,13 +1,11 @@
 var width = 1050,
     height = 675;
 
-var svg = d3.select("#my_dataviz")
+var svg = d3.select("#world-map")
     .append("svg")
     .attr("width", width)
     .attr("height", height)
     .append("g");
-
-console.log(svg);
 
 var path = d3.geoPath();
 var projection = d3.geoMercator()
@@ -27,10 +25,10 @@ d3.queue()
             data.set(country, data.get(country) ? data.get(country) + 1 : 1);
         })
     })
-    .await(ready);
+    .await(drawWorldMap);
 
-function ready(error, topo) {
-    var tooltip = d3.select("#my_dataviz")
+function drawWorldMap(error, topo) {
+    var tooltip = d3.select("#world-map")
         .append("div")
         .style("opacity", 0)
         .attr("class", "tooltip")
@@ -44,7 +42,7 @@ function ready(error, topo) {
 
     var legend = d3.legendColor()
         .scale(colorScale)
-        .labels(["No data", "0", "1+", "20+", "50+", "100+", "1000+"]);
+        .labels(["Keine Daten", "0", "1+", "20+", "50+", "100+", "1000+"]);
 
     svg.append("g").call(legend)
 

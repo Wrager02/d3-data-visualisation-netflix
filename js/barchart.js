@@ -56,7 +56,7 @@ d3.csv("data/bar-data1.csv", function(error, data) {
         .attr("y", 6)
         .attr("dy", ".71em")
         .style("text-anchor", "end")
-        .text("Anzahl an Produktionen");
+        .text("Anzahl an Inhalten");
 
     svg.selectAll("bar")
         .data(data)
