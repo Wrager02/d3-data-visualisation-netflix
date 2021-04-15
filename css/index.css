@@ -99,7 +99,9 @@
     margin-bottom: 40px;
 }
 
-
+.link {
+    color: #5a7def;
+}
 
 .links {
     margin: auto;
