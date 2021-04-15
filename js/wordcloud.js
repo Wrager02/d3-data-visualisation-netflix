@@ -1,3 +1,23 @@
+let wordOccurrence = {};
+
+d3.csv("https://raw.githubusercontent.com/Wrager02/d3-test/master/data/netflix_titles_v2.csv", function (d) {
+    d.forEach(entry => {
+        const regEx = /[#():%!?.,;\-_&]/g;
+        let title = entry.title.replaceAll(regEx, "").toUpperCase();
+        title.split(/\s+/).forEach(word => {
+            wordOccurrence[word] = wordOccurrence[word] ? wordOccurrence[word] + 1 : 1;
+
+            //wordOccurrence.set(word, wordOccurrence.get(word) ? wordOccurrence.get(word) + 1 : 1);
+        })
+    })
+})
+
+let values = Object.entries(wordOccurrence);
+
+console.log("values", values)
+
+
+
 // List of words
 var myWords = [{word: "Running", size: "10"}, {word: "Surfing", size: "20"}, {word: "Climbing", size: "50"}, {word: "Kiting", size: "30"}, {word: "Sailing", size: "20"}, {word: "Snowboarding", size: "60"} ]
 
