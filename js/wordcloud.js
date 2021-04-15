@@ -23,6 +23,8 @@ var wordOccurrence = {};
 })
 
 
+console.log(wordOccurrence)
+console.log(Array.from(wordOccurrence))
 
 
 
