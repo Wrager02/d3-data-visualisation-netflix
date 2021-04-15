@@ -8,6 +8,10 @@
     font-weight: 400;
 }
 
+#my_dataviz {
+    position: absolute;
+}
+
 
 .navbar {
     width: 100%;
