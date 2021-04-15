@@ -5,31 +5,29 @@ var wordOccurrence = {};
 
     d3.csv("https://raw.githubusercontent.com/Wrager02/d3-test/master/data/netflix_titles_v2.csv", function (d) {
     d.forEach(entry => {
-        const regEx = /[^A-Za-z]/g;
+        const regEx = /[^A-Za-z ]/g;
         let title = entry.title.replaceAll(regEx, "").toUpperCase();
         title.split(/\s+/).forEach(word => {
 
-            if (!wordOccurrence.hasOwnProperty(word)) {
-                Object.defineProperty(wordOccurrence, word, {
-                enumerable: true,
-                value: 1,
-            });
-            } else {
-                wordOccurrence[word] += 1;
-            }
+            wordOccurrence[word] = wordOccurrence[word] ? wordOccurrence[word] + 1 : 1;
             //wordOccurrence.set(word, wordOccurrence.get(word) ? wordOccurrence.get(word) + 1 : 1);
         })
     })
-})
+    })
+
+
+var values = [];
+
+setTimeout(function () {
+    values = Object.entries(wordOccurrence);
+    values.filter(element => element[1] > 5)
+    console.log(values);
+     }, 1000);
 
 
 
-
-
-// List of words
-var myWords = [{word: "Running", size: "10"}, {word: "Surfing", size: "20"}, {word: "Climbing", size: "50"}, {word: "Kiting", size: "30"}, {word: "Sailing", size: "20"}, {word: "Snowboarding", size: "60"} ]
-
-
+setTimeout(function () {
+    
 // set the dimensions and margins of the graph
 var margin = {top: 10, right: 10, bottom: 10, left: 10},
     width = 450 - margin.left - margin.right,
@@ -47,7 +45,7 @@ var svg = d3.select("#wordcloud").append("svg")
 // Wordcloud features that are different from one word to the other must be here
 var layout = d3.layout.cloud()
     .size([width, height])
-    .words(myWords.map(function(d) { return {text: d.word, size:d.size}; }))
+    .words(values.map(function(d) { return {text: d[0], size:d[1]}; }))
     .padding(5)        //space between words
     .rotate(function() { return ~~(Math.random() * 2) * 90; })
     .fontSize(function(d) { return d.size; })      // font size of words
@@ -70,5 +68,24 @@ function draw(words) {
         .attr("transform", function(d) {
             return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
         })
-        .text(function(d) { return d.text; });
+        .text(function (d) { return d.text; });
+    
+    toggleLoader();
+}
+
+}, 2000);
+     
+
+
+
+// List of words
+var myWords = [{word: "Running", size: "10"}, {word: "Surfing", size: "20"}, {word: "Climbing", size: "50"}, {word: "Kiting", size: "30"}, {word: "Sailing", size: "20"}, {word: "Snowboarding", size: "60"} ]
+
+function toggleLoader() {
+  var x = document.getElementById("loader");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
 }
