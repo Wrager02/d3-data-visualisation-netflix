@@ -5,7 +5,9 @@ var svg = d3.select("#my_dataviz")
     .append("svg")
     .attr("width", width)
     .attr("height", height)
-    .append("g")
+    .append("g");
+
+console.log(svg);
 
 var path = d3.geoPath();
 var projection = d3.geoMercator()
@@ -90,3 +92,6 @@ function ready(error, topo) {
         .on("mouseleave", mouseleave )
     ;
 }
+
+
+
