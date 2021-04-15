@@ -5,34 +5,47 @@
     <title>D3 Graph</title>
 
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+          integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
 </head>
 <body>
 <div class="navbar">
     <a href="index.html" class="title">MEDT GRAPH</a>
     <span></span>
-    <a href="index.html">Worldmap</a>
+    <a href="worldmap.html">Worldmap</a>
     <a href="wordcloud.html">Wordcloud</a>
+    <a href="sankey.html">Sankey</a>
+    <a href="sankey.html">Barchart</a>
 </div>
-<main>
-    <div class="sidebar">
-        <h2>Beschreibung</h2>
-        <p>asdasdasadasdasdasoiuhduiawdiguawdgiuzawdguiawuiiuasdsdasdadsadsad uihawdhiuaw iuhdahiwud huiawd ihuawihud
-            iuahwd iuhawiuh awiuhdahwi ia</p>
-        <p>asdasdasadasdasdasoiuhduiawdiguawdgiuzawdguiawuiiuasdsdasdadsadsad uihawdhiuaw iuhdahiwud huiawd ihuawihud
-            iuahwd iuhawiuh awiuhdahwi ia</p>
-    </div>
-    <div class="content">
-        <h1>Netflix content by release country</h1>
-        <div id="my_dataviz"></div>
-    </div>
-</main>
-</body>
+<div id="main">
+    <div>
+        <h1>D3 Graph Aufgabe</h1>
+        <hr>
+        <p>Willkommen zu unserer Interpretation der D3 Graphen Aufgabe. Auf den folgenden Seiten finden Sie
+            verschiedenste Graphen zu Netflix-Produktionen. Das Team hinter der Website besteht aus Fischer Jakob,
+            Hirmann Matthias, Reckendorfer Alexander, Schreiber Tim und Sollereder Leo, allesamt Schüler der fünften
+            Klasse an der HTL Rennweg.</p>
+        <div class="links">
+            <a href="worldmap.html" class="icon-links">
+                <i class="fas fa-globe-americas">
+                </i>
+            </a>
 
-<script src="https://d3js.org/d3.v4.js"></script>
-<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
-<script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3.layout.cloud.js"></script>
-<script src="js/graph.js"></script>
+            <a href="wordcloud.html" class="icon-links">
+                <i class="fas fa-cloud"></i>
+            </a>
+
+            <a href="sankey.html" class="icon-links">
+                <i class="fas fa-bacon"></i>
+            </a>
+
+            <a href="barchart.html" class="icon-links">
+                <i class="fas fa-chart-bar"></i>
+            </a>
+
+        </div>
+    </div>
+</div>
+</body>
 
 </html>
