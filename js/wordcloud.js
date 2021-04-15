@@ -15,8 +15,7 @@ var wordOccurrence = {};
     })
     })
 
-console.log(wordOccurrence)
-console.log(Array.from(wordOccurrence))
+console.log(wordOccurrence);
 
 var values = [];
 
