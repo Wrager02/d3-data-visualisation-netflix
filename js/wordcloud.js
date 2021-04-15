@@ -1,20 +1,28 @@
-let wordOccurrence = {};
+"use-strict";
 
-d3.csv("https://raw.githubusercontent.com/Wrager02/d3-test/master/data/netflix_titles_v2.csv", function (d) {
+var wordOccurrence = {};
+
+
+    d3.csv("https://raw.githubusercontent.com/Wrager02/d3-test/master/data/netflix_titles_v2.csv", function (d) {
     d.forEach(entry => {
-        const regEx = /[#():%!?.,;\-_&]/g;
+        const regEx = /[^A-Za-z]/g;
         let title = entry.title.replaceAll(regEx, "").toUpperCase();
         title.split(/\s+/).forEach(word => {
-            wordOccurrence[word] = wordOccurrence[word] ? wordOccurrence[word] + 1 : 1;
 
+            if (!wordOccurrence.hasOwnProperty(word)) {
+                Object.defineProperty(wordOccurrence, word, {
+                enumerable: true,
+                value: 1,
+            });
+            } else {
+                wordOccurrence[word] += 1;
+            }
             //wordOccurrence.set(word, wordOccurrence.get(word) ? wordOccurrence.get(word) + 1 : 1);
         })
     })
 })
 
-let values = Object.entries(wordOccurrence);
 
-console.log("values", values)
 
 
 
